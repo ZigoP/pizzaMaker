@@ -1,0 +1,453 @@
+{
+  "tasks":
+  [
+    {
+      "taskId": 1,
+      "title": "Task #1",
+      "images": [
+        {
+          "imageId": 1,
+          "src": "ham.png",
+          "title": "ham"
+        }
+      ],
+      "description": "Add the following ingredients to the pizza: 4 ham",
+      "solution": [
+        {
+          "ham": 4
+        }
+      ],
+      "solutionImg": {
+        "src": "solution0.png"
+      }
+    },
+    {
+      "taskId": 2,
+      "title": "Task #2",
+      "images": [
+        {
+          "imageId": 1,
+          "src": "ham.png",
+          "title": "ham"
+        },
+        {
+          "imageId": 2,
+          "src": "cheese.png",
+          "title": "cheese"
+        }
+      ],
+      "description": "Add the following ingredients to the pizza: 3 ham, 2 cheese",
+      "solution": [
+        {
+          "ham": 3
+        },
+        {
+          "cheese": 2
+        }
+      ],
+      "solutionImg": {
+        "src": "solution1.png"
+      }
+    },
+    {
+      "taskId": 3,
+      "title": "Task #3",
+      "images": [
+        {
+          "imageId": 1,
+          "src": "ham.png",
+          "title": "ham"
+        },
+        {
+          "imageId": 2,
+          "src": "cheese.png",
+          "title": "cheese"
+        },
+        {
+          "imageId": 3,
+          "src": "corn.png",
+          "title": "corn"
+        }
+      ],
+      "description": "Add the following ingredients to the pizza: 4 ham, 2 cheese, 3 corn",
+      "solution": [
+        {
+          "ham": 4
+        },
+        {
+          "cheese": 2
+        },
+        {
+          "corn": 3
+        }
+      ],
+      "solutionImg": {
+        "src": "solution2.png"
+      }
+    },
+    {
+      "taskId": 4,
+      "title": "Task #4",
+      "images": [
+        {
+          "imageId": 1,
+          "src": "salami.png",
+          "title": "salami"
+        },
+        {
+          "imageId": 2,
+          "src": "cheese.png",
+          "title": "cheese"
+        },
+        {
+          "imageId": 3,
+          "src": "onion.png",
+          "title": "onion"
+        }
+      ],
+      "description": "Add the following ingredients to the pizza: 5 salami, 3 cheese, 4 onion",
+      "solution": [
+        {
+          "salami": 5
+        },
+        {
+          "cheese": 3
+        },
+        {
+          "onion": 4
+        }
+      ],
+      "solutionImg": {
+        "src": "solution3.png"
+      }
+    },
+    {
+      "taskId": 5,
+      "title": "Task #5",
+      "images": [
+        {
+          "imageId": 1,
+          "src": "egg.png",
+          "title": "egg"
+        },
+        {
+          "imageId": 2,
+          "src": "salami.png",
+          "title": "salami"
+        }
+      ],
+      "description": "Add the following ingredients to the pizza: 1 egg, 5 salami",
+      "solution": [
+        {
+          "egg": 1
+        },
+        {
+          "salami": 5
+        }
+      ],
+      "solutionImg": {
+        "src": "solution4.png"
+      }
+    },
+    {
+      "taskId": 6,
+      "title": "Task #6",
+      "images": [
+        {
+          "imageId": 1,
+          "src": "cheese.png",
+          "title": "cheese"
+        },
+        {
+          "imageId": 2,
+          "src": "mushroom.png",
+          "title": "mushroom"
+        },
+        {
+          "imageId": 3,
+          "src": "olive.png",
+          "title": "olive"
+        },
+        {
+          "imageId": 4,
+          "src": "onion.png",
+          "title": "onion"
+        }
+      ],
+      "description": "Add the following ingredients to the pizza: 4 cheese, 3 mushroom, 5 olive, 2 onion",
+      "solution": [
+        {
+          "cheese": 4
+        },
+        {
+          "mushroom": 3
+        },
+        {
+          "olive": 5
+        },
+        {
+          "onion": 2
+        }
+      ],
+      "solutionImg": {
+        "src": "solution5.png"
+      }
+    },
+    {
+      "taskId": 7,
+      "title": "Task #7",
+      "images": [
+        {
+          "imageId": 1,
+          "src": "ham.png",
+          "title": "ham"
+        },
+        {
+          "imageId": 2,
+          "src": "cheese.png",
+          "title": "cheese"
+        },
+        {
+          "imageId": 3,
+          "src": "pineapple.png",
+          "title": "pineapple"
+        }
+      ],
+      "description": "Add the following ingredients to the pizza: 4 ham, 2 cheese, 5 pineapple",
+      "solution": [
+        {
+          "ham": 4
+        },
+        {
+          "cheese": 2
+        },
+        {
+          "pineapple": 5
+        }
+      ],
+      "solutionImg": {
+        "src": "solution6.png"
+      }
+    },
+    {
+      "taskId": 8,
+      "title": "Task #8",
+      "images": [
+        {
+          "imageId": 1,
+          "src": "egg.png",
+          "title": "egg"
+        },
+        {
+          "imageId": 2,
+          "src": "ham.png",
+          "title": "ham"
+        },
+        {
+          "imageId": 3,
+          "src": "bacon.png",
+          "title": "bacon"
+        },
+        {
+          "imageId": 4,
+          "src": "chili.png",
+          "title": "chili"
+        },
+        {
+          "imageId": 5,
+          "src": "cheese.png",
+          "title": "cheese"
+        }
+      ],
+      "description": "Add the following ingredients to the pizza: 1 egg, 2 ham, 2 bacon, 3 chili, 2 cheese",
+      "solution": [
+        {
+          "egg": 1
+        },
+        {
+          "ham": 2
+        },
+        {
+          "bacon": 2
+        },
+        {
+          "chili": 3
+        },
+        {
+          "cheese": 2
+        }
+      ],
+      "solutionImg": {
+        "src": "solution7.png"
+      }
+    },
+    {
+      "taskId": 9,
+      "title": "Task #9",
+      "images": [
+        {
+          "imageId": 1,
+          "src": "fish.png",
+          "title": "fish"
+        },
+        {
+          "imageId": 2,
+          "src": "onion.png",
+          "title": "onion"
+        },
+        {
+          "imageId": 3,
+          "src": "egg.png",
+          "title": "egg"
+        },
+        {
+          "imageId": 4,
+          "src": "olive.png",
+          "title": "olive"
+        },
+        {
+          "imageId": 5,
+          "src": "corn.png",
+          "title": "corn"
+        }
+      ],
+      "description": "Add the following ingredients to the pizza: 2 fish, 3 onion, 1 egg, 4 olive, 3 corn",
+      "solution": [
+        {
+          "fish": 2
+        },
+        {
+          "onion": 3
+        },
+        {
+          "egg": 1
+        },
+        {
+          "olive": 4
+        },
+        {
+          "corn": 3
+        }
+      ],
+      "solutionImg": {
+        "src": "solution8.png"
+      }
+    },
+    {
+      "taskId": 10,
+      "title": "Task #10",
+      "images": [
+        {
+          "imageId": 1,
+          "src": "salami.png",
+          "title": "salami"
+        },
+        {
+          "imageId": 2,
+          "src": "cheese.png",
+          "title": "cheese"
+        },
+        {
+          "imageId": 3,
+          "src": "mushroom.png",
+          "title": "mushroom"
+        }
+      ],
+      "description": "Add the following ingredients to the pizza: 8 salami, 3 cheese, 3 mushroom",
+      "solution": [
+        {
+          "salami": 8
+        },
+        {
+          "cheese": 3
+        },
+        {
+          "mushroom": 3
+        }
+      ],
+      "solutionImg": {
+        "src": "solution9.png"
+      }
+    },
+    {
+      "taskId": 11,
+      "title": "Task #11",
+      "images": [
+        {
+          "imageId": 1,
+          "src": "cheese.png",
+          "title": "cheese"
+        },
+        {
+          "imageId": 2,
+          "src": "corn.png",
+          "title": "corn"
+        }
+      ],
+      "description": "Add the following ingredients to the pizza: 6 cheese, 4 corn",
+      "solution": [
+        {
+          "cheese": 6
+        },
+        {
+          "corn": 4
+        }
+      ],
+      "solutionImg": {
+        "src": "solution10.png"
+      }
+    },
+    {
+      "taskId": 12,
+      "title": "Task #12",
+      "images": [
+        {
+          "imageId": 1,
+          "src": "salami.png",
+          "title": "salami"
+        },
+        {
+          "imageId": 2,
+          "src": "ham.png",
+          "title": "ham"
+        },
+        {
+          "imageId": 3,
+          "src": "bacon.png",
+          "title": "bacon"
+        },
+        {
+          "imageId": 4,
+          "src": "egg.png",
+          "title": "egg"
+        },
+        {
+          "imageId": 5,
+          "src": "onion.png",
+          "title": "onion"
+        }
+      ],
+      "description": "Add the following ingredients to the pizza: 3 salami, 3 ham, 3 bacon, 1 egg, 2 onion",
+      "solution": [
+        {
+          "salami": 3
+        },
+        {
+          "ham": 3
+        },
+        {
+          "bacon": 3
+        },
+        {
+          "egg": 1
+        },
+        {
+          "onion": 2
+        }
+      ],
+      "solutionImg": {
+          "src": "solution11.png"
+      }
+    }
+  ]
+}

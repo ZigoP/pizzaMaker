@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PizzaMaker</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" type="image/jpg" href="images/favicon.ico"/>
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <header>
+        <h1 style="text-align: center">PizzaMaker</h1>
+    </header>
+    <div class="container">
+        <div id="mainText">
+            <h2>How to play:</h2>
+            <p>Welcome to the PizzaMaker, which is a simple drag and drop pizza making game.</p>
+            <p>After you start the game, you will see the pizza on the left and the ingredients on the right.
+                Above the pizza you will see the recipe that you will have to make.
+                You can put the ingredients on the pizza by dragging them on top of the pizza, then releasing them.</p>
+            <p>After you have finished the pizza, click the "Next" button to continue onto the next level.
+                Anytime throughout the game you can undo your last action with the "Undo" button,
+                check the solution for the current level with the "Solution" button,
+                print the information text with the "Print" button,
+                restart the current level with the "Restart Level" button,
+                or restart the game with the "Restart Game" button.</p>
+            <p>Anytime if you don't feel like playing anymore you can just leave the page, all your progress will be saved after each completed level.</p>
+            <p>Press the "Start" button to start the game.</p>
+        </div>
+        <div id="control" class="no-print">
+            <input type="button" id="startGame" value="Start" class="button">
+            <input type="button" id="printInfo" value="Print" class="button">
+            <input type="button" id="help" value="Help" style="visibility: hidden" class="button">
+            <input type="button" id="nextTask" value="Next" style="visibility: hidden" class="button">
+            <input type="button" id="solution" value="Solution" style="visibility: hidden" class="button">
+            <input type="button" id="undo" value="Undo" style="visibility: hidden" class="button">
+            <input type="button" id="restartLevel" value="Restart Level" style="visibility: hidden" class="button">
+            <input type="button" id="restartGame" value="Restart Game" style="visibility: hidden" class="button">
+
+        </div>
+        <div id="taskDesc">
+
+        </div>
+        <div id="pizzaDough" ondrop="dropcopy(event)" ondragover="allowDrop(event)" class="no-print"></div>
+        <div id="ingredients" class="no-print">
+
+        </div>
+        <div id="backdrop">
+            <div id="modal">
+                <div id="helpDiv" style="display: none">
+                    <h2 style="text-align: center">How to play:</h2>
+                    <p>Welcome to the PizzaMaker, which is a simple drag and drop pizza making game.</p>
+                    <p>After you start the game, you will see the pizza on the left and the ingredients on the right.
+                        Above the pizza you will see the recipe that you will have to make.
+                        You can put the ingredients on the pizza by dragging them on top of the pizza, then releasing them.</p>
+                    <p>After you have finished the pizza, click the "Next" button to continue onto the next level.
+                        Anytime throughout the game you can undo your last action with the "Undo" button,
+                        check the solution for the current level with the "Solution" button,
+                        print the information text with the "Print" button,
+                        restart the current level with the "Restart Level" button,
+                        or restart the game with the "Restart Game" button.</p>
+                    <p>Anytime if you don't feel like playing anymore you can just leave the page, all your progress will be saved after each completed level.</p>
+                    <p>Press the "Start" button to start the game.</p>
+                </div>
+                <div id="printDiv" style="display: none">
+                    <input type="button" id="printInfo2" value="Print" class="button no-print">
+                </div>
+                <h3 style="text-align: center;display: none" id="solutionH">Solution</h3>
+                <div id="solutionDiv" style="display: none" class="no-print">
+                </div>
+                <div class="no-print">
+                    <input type="button" id="closeButton" value="Close" class="button">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        if ("serviceWorker" in navigator) {
+            window.addEventListener("load", function() {
+                navigator.serviceWorker
+                    .register("serviceWorker.js")
+                    .then(reg => console.log("service worker registered"))
+                    .catch(err => console.log("service worker not registered", err))
+            })
+        }
+        const tasks = []
+        const desc = document.getElementById("taskDesc")
+        const dough = document.getElementById("pizzaDough")
+        const ingred = document.getElementById("ingredients")
+        const nextButton = document.getElementById("nextTask")
+        const startButton = document.getElementById("startGame")
+        const helpButton = document.getElementById("help")
+        const solutionButton  = document.getElementById("solution")
+        const undoButton = document.getElementById("undo")
+        const restartLvlButton = document.getElementById("restartLevel")
+        const restartGameButton = document.getElementById("restartGame")
+        var currentTask
+        var completedTasks = []
+        var currentLVL = 1
+        var phoneClX = 0
+        var phoneClY = 0
+        var rect = dough.getBoundingClientRect()
+
+        fetch("./tasks.json")
+            .then(res => res.json())
+            .then(data => {
+                tasks.push(...data.tasks)
+            })
+
+        const addIngredients = (task) => {
+            desc.innerHTML = ""
+            ingred.innerHTML = ""
+            dough.innerHTML = ""
+            const len = task.images.length
+            const p1 = document.createElement("p")
+            const p2 = document.createElement("p")
+            p1.innerText = `${currentLVL}`+"/12 Level"
+            p2.innerText = task.description
+            desc.appendChild(p1)
+            desc.appendChild(p2)
+            for(let i = 0; i < len; i++){
+                const img = document.createElement("img")
+                img.src = `./images/food/${task.images[i].src}`
+                img.id = `${task.images[i].imageId}`
+                img.title = `${task.images[i].title}`
+                img.style.width = "25%"
+                img.style.height = "auto"
+                img.draggable = true
+                img.addEventListener("dragstart", drag)
+                img.addEventListener("touchmove", phoneMove)
+                img.addEventListener("touchend", phoneEnd)
+                ingred.appendChild(img)
+            }
+
+        }
+        const showTask = () => {
+            if(currentLVL === 13){
+                var mobile = (/iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()));
+                if (mobile) {
+                    alert("Congratulations! You have finished the game.")
+                } else{
+                    alert("Congratulations! You have finished the game.")
+                }
+                currentLVL = 1
+                localStorage.setItem("LVL", JSON.stringify(currentLVL))
+                completedTasks = []
+                localStorage.removeItem("completed")
+                dough.innerHTML = ""
+            }
+            var taskNum = Math.floor(Math.random() * 12)
+            if(localStorage.getItem("completed") != null){
+                completedTasks = JSON.parse(localStorage.getItem("completed"))
+                while(completedTasks.includes(taskNum)){
+                    taskNum = Math.floor(Math.random() * 12)
+                }
+            }
+            addIngredients(tasks[taskNum])
+            currentTask = taskNum
+            localStorage.setItem("current", currentTask)
+        }
+        nextButton.addEventListener("click", () => {
+            var err = 0
+            if(localStorage.getItem("current") != null)
+                currentTask = JSON.parse(localStorage.getItem("current"))
+            for(var i = 0; i < tasks[currentTask].solution.length; i++){
+                var solutionIngredient = Object.keys(tasks[currentTask].solution[i])[0]
+                var solutionNumber = Object.values(tasks[currentTask].solution[i])[0]
+                var ingredients = document.querySelectorAll("[class=" + CSS.escape(solutionIngredient) + "]")
+                if(ingredients.length !== solutionNumber){
+                    err = 1
+                }
+            }
+            if(err){
+                var mobile = (/iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()));
+                if (mobile) {
+                    alert("Incorrect number of ingredients")
+                } else{
+                    alert("Incorrect number of ingredients")
+                }
+                dough.innerHTML = ""
+            } else {
+                if(localStorage.getItem("completed") != null)
+                    completedTasks = JSON.parse(localStorage.getItem("completed"))
+                completedTasks.push(currentTask)
+                localStorage.setItem("completed", JSON.stringify(completedTasks))
+                currentLVL++
+                localStorage.setItem("LVL", JSON.stringify(currentLVL))
+                showTask()
+            }
+        })
+        startButton.addEventListener("click", () => {
+            while(document.getElementById("mainText").lastElementChild != null)
+                document.getElementById("mainText").removeChild(document.getElementById("mainText").lastElementChild)
+            document.getElementById("mainText")
+            document.getElementById("control").removeChild(startButton)
+            helpButton.style.visibility = "visible"
+            nextButton.style.visibility = "visible"
+            solutionButton.style.visibility = "visible"
+            undoButton.style.visibility = "visible"
+            restartLvlButton.style.visibility = "visible"
+            restartGameButton.style.visibility = "visible"
+            //dough.style.backgroundImage = "url('https://webte1.fei.stuba.sk/~xzigo/Skuska_gs0QQ1fa5/images/food/dough.jpg')"
+            dough.style.backgroundImage = "url('/images/food/dough.jpg')"
+            dough.style.backgroundRepeat = "no-repeat"
+            dough.style.backgroundSize = "100% 100%"
+            //ingred.style.backgroundImage = "url('https://webte1.fei.stuba.sk/~xzigo/Skuska_gs0QQ1fa5/images/food/plank.jpg')"
+            ingred.style.backgroundImage = "url('/images/food/plank.jpg')"
+            ingred.style.backgroundRepeat = "no-repeat"
+            ingred.style.backgroundSize = "100% 100%"
+            if(localStorage.getItem("LVL") != null){
+                currentLVL = JSON.parse(localStorage.getItem("LVL"))
+            } else{
+                localStorage.setItem("LVL", JSON.stringify(currentLVL))
+            }
+            if(localStorage.getItem("completed") != null){
+                for(var i = 0; i < JSON.parse(localStorage.getItem("completed")).length; i++)
+                    completedTasks.push((JSON.parse(localStorage.getItem("completed")))[i])
+            }
+            if(localStorage.getItem("current") != null){
+                addIngredients(tasks[JSON.parse(localStorage.getItem("current"))])
+            }else{
+                showTask()
+            }
+        })
+        undoButton.addEventListener("click", () => {
+            if(dough.lastElementChild != null)
+                dough.removeChild(dough.lastElementChild);
+        })
+        restartLvlButton.addEventListener("click", () => {
+            dough.innerHTML = ""
+        })
+        restartGameButton.addEventListener("click", () => {
+            currentLVL = 1
+            localStorage.setItem("LVL", JSON.stringify(currentLVL))
+            if(localStorage.getItem("completed") != null)
+                localStorage.removeItem("completed")
+            showTask()
+        })
+        helpButton.addEventListener("click", () => {
+            document.getElementById("backdrop").style.display = "flex";
+            document.getElementById("helpDiv").style.display = "block";
+            document.getElementById("printDiv").style.display = "block";
+        })
+        solutionButton.addEventListener("click", () => {
+            if(localStorage.getItem("current") != null)
+                currentTask = JSON.parse(localStorage.getItem("current"))
+            document.getElementById("backdrop").style.display = "flex";
+            const img = document.createElement("img")
+            img.src = `./images/food/${tasks[currentTask].solutionImg.src}`
+            img.style.width = "100%"
+            img.style.height = "auto"
+            document.getElementById("solutionDiv").appendChild(img)
+            document.getElementById("solutionDiv").style.display = "block"
+            document.getElementById("solutionH").style.display = "block"
+        })
+        document.getElementById("closeButton").addEventListener("click", () => {
+            document.getElementById("backdrop").style.display = "none";
+            document.getElementById("solutionDiv").style.display = "none";
+            document.getElementById("solutionH").style.display = "none"
+            document.getElementById("helpDiv").style.display = "none";
+            document.getElementById("printDiv").style.display = "none";
+
+            if( document.getElementById("solutionDiv").lastElementChild != null)
+                document.getElementById("solutionDiv").removeChild( document.getElementById("solutionDiv").lastElementChild);
+        })
+        document.getElementById("printInfo").addEventListener("click", () => {
+            window.print()
+        })
+        document.getElementById("printInfo2").addEventListener("click", () => {
+            window.print()
+        })
+
+        function allowDrop(ev)
+        {
+            ev.preventDefault();
+        }
+
+        function drag(ev)
+        {
+            ev.dataTransfer.setData("Dragged",ev.target.id);
+        }
+
+        function dropcopy(ev)
+        {
+            ev.preventDefault();
+            rect = dough.getBoundingClientRect()
+            var id = ev.dataTransfer.getData("Dragged");
+            var copyimg = document.createElement("img");
+            copyimg.src = document.getElementById(id).src;
+            copyimg.className = document.getElementById(id).title
+            copyimg.style.width = "15%"
+            copyimg.style.height = "30%"
+            copyimg.style.position = "absolute"
+            var x = ev.clientX - (rect.width*7.5/100)
+            var y = ev.clientY - (rect.height*15/100)
+            copyimg.style.left = (x-rect.left)*100/rect.width + "%"
+            copyimg.style.top =  (y-rect.top)*100/rect.height + "%"
+            if((x > rect.left && x < rect.left+rect.width) && (y > rect.top && y < rect.top+rect.height)){
+                dough.appendChild(copyimg);
+            }
+        }
+        const phoneMove = (ev) => {
+            ev.preventDefault()
+            phoneClX =  ev.targetTouches[0].clientX
+            phoneClY = ev.targetTouches[0].clientY
+        }
+        const phoneEnd = (ev) => {
+            ev.preventDefault()
+            rect = dough.getBoundingClientRect()
+            var clone = document.createElement("img");
+            clone.src = ev.target.src;
+            clone.className = ev.target.title
+            clone.style.width = "15%"
+            clone.style.height = "10%"
+            clone.style.position = "absolute"
+            var x = phoneClX - (rect.width*7.5/100)
+            var y = phoneClY - (rect.height*5/100)
+            clone.style.left = (x-rect.left)*100/rect.width + "%"
+            clone.style.top = (y-rect.top)*100/rect.height + "%"
+            if((x > rect.left && x < rect.left+rect.width) && (y > rect.top && y < rect.top+rect.height)){
+                dough.appendChild(clone)
+            }
+        }
+    </script>
+</body>
+</html>
